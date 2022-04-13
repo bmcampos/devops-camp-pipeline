@@ -34,8 +34,7 @@ pipeline {
                     }
                 }
             }
-        }
-        post {
+             post {
                 always {
                     echo "Clean local $APP_IMAGE_NAME image"
                     script {
@@ -48,6 +47,8 @@ pipeline {
                     }
                 }
             }
+        }
+       
         stage('Database docker build') {
             steps {
                 echo "Building database image"
@@ -59,11 +60,9 @@ pipeline {
                             sh 'docker push $HARBOR_REGISTRY/$HARBOR_PROJECT/$DB_IMAGE_NAME:$COMMIT_HASH-$PIPELINE_HASH'
                         }
                     }
-            
             }
             }
-        }
-        post {
+             post {
                 always {
                     echo "Clean local $DB_IMAGE_NAME image"
                     script {
@@ -76,6 +75,8 @@ pipeline {
                     }
                 }
             }
+        }
+       
         stage('Test'){
             steps {
                 echo "Testing stage"

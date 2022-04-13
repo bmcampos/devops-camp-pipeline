@@ -32,7 +32,7 @@ pipeline {
                             sh 'docker push $HARBOR_REGISTRY/$HARBOR_PROJECT/$APP_IMAGE_NAME:$COMMIT_HASH-$PIPELINE_HASH'
                         }
                     }
-            
+                }
             }
         }
         post {
@@ -86,7 +86,7 @@ pipeline {
                 echo "Deployment stage"
             }
         }
-    
+    }
     post {
         cleanup {
             echo "Clean workspace"

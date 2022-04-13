@@ -86,7 +86,7 @@ pipeline {
                 echo "Deployment stage"
             }
         }
-    }
+    
     post {
         cleanup {
             echo "Clean workspace"

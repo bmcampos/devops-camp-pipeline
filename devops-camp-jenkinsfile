@@ -1,0 +1,39 @@
+pipeline {
+    agent {
+        label 'jenkins-agent'
+    }
+    stages {
+        stage('Application repository') {
+            steps {
+                echo "Cloning application repository"
+                sh 'git clone <https://github.com/bmcampos/afs-labs-student.git'>
+            }
+        }
+        stage('Application docker build') {
+            steps {
+                echo "Building application image"
+            }
+        }
+        stage('Database docker build') {
+            steps {
+                echo "Building database image"
+            }
+        }
+        stage('Test'){
+            steps {
+                echo "Testing stage"
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo "Deployment stage"
+            }
+        }
+    }
+    post {
+        cleanup {
+            echo "Clean workspace"
+            sh 'rm -rf .git ./*'
+        }
+    }
+}

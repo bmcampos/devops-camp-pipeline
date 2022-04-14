@@ -8,7 +8,7 @@ pipeline {
         HARBOR_PROJECT = 'bcampos-harbor-project'
         DB_IMAGE_NAME = 'db'
     }
-    stages {
+    stage {
         stage('Application repository') {
             steps {
                 echo "Cloning application repository"
@@ -31,7 +31,7 @@ pipeline {
            when {
               environment name: 'BUILD_DB', value: 'true'
            }
-           stages {
+           stage {
               stage('Database docker build') {
                   steps {
                       echo "Building database image"

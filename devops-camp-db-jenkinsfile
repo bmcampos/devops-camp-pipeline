@@ -33,7 +33,7 @@ pipeline {
            when {
               environment name: 'BUILD_DB', value: 'true'
            }
-           stagesg {
+           stages {
               stage('Database docker build') {
                   steps {
                       echo "Building database image"

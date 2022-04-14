@@ -64,7 +64,8 @@ pipeline {
             steps {
                 echo "Deployment stage"
                 sh 'kubectl -n bcampos set image deployment/app-deployment app-deployment=$HARBOR_REGISTRY/$HARBOR_PROJECT/$APP_IMAGE_NAME:$COMMIT_HASH-$PIPELINE_HASH'
-            }
+                sh 'kubectl -n bcampos apply -f ./afs-labs-student/kubernetes/config-map.yaml'
+            }        
         }
     }
     post {

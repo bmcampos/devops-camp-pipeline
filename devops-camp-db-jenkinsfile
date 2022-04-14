@@ -17,7 +17,7 @@ stage('Application repository') {
                 echo "Cloning application repository"
                 sh 'git clone https://github.com/bmcampos/afs-labs-student.git'
                 dir('afs-labs-student') 
-                withCredentials([usernamePassword(credentialsId: 'b-campos-harbor-auth', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: 'bcampos-harbor-auth', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     script {
                         env.BUILD_DB = sh(script: 'python check_harbor_db.py -h $COMMIT_HASH -i $DB_IMAGE_NAME -r $HARBOR_REGISTRY -p $HARBOR_PROJECT -c ${USERNAME}:${PASSWORD}', returnStdout: true).trim()
                     }
@@ -37,10 +37,10 @@ stage('Application repository') {
               stage('Database docker build') {
                   steps {
                       echo "Building database image"
-                      withCredentials([usernameColonPassword(credentialsId: 'b-campos-harbor-auth', variable: 'HARBOR-AUTH')]) {
+                      withCredentials([usernameColonPassword(credentialsId: 'bcampos-harbor-auth', variable: 'HARBOR-AUTH')]) {
                           script {
                               sh 'docker build -t $DB_IMAGE_NAME-$COMMIT_HASH -f ./db/Dockerfile ./afs-labs-student'
-                              docker.withRegistry('https://$HARBOR_REGISTRY', 'b-campos-harbor-auth') {
+                              docker.withRegistry('https://$HARBOR_REGISTRY', 'bcampos-harbor-auth') {
                                   sh 'docker tag $DB_IMAGE_NAME-$COMMIT_HASH $HARBOR_REGISTRY/$HARBOR_PROJECT/$DB_IMAGE_NAME:$COMMIT_HASH-$PIPELINE_HASH'
                                   sh 'docker push $HARBOR_REGISTRY/$HARBOR_PROJECT/$DB_IMAGE_NAME:$COMMIT_HASH-$PIPELINE_HASH'
                               }
